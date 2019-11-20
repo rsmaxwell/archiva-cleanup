@@ -1,0 +1,11 @@
+#!/bin/bash
+
+LOGDIR="/logs/archiva-cleanup"
+
+mkdir -p ${LOGDIR}
+
+timestamp=${date +%Y-%m-%d %H:%M:%S}
+echo "---[ ${timestamp} ]----------------------------" 1>>${LOGDIR}/stdout.log
+echo "---[ ${timestamp} ]----------------------------" 2>>${LOGDIR}/stderr.log
+
+java -cp archiva-cleanup-0.0.1.jar com.rsmaxwell.archiva.App 1>>${LOGDIR}/stdout.log 2>>${LOGDIR}/stderr.log
