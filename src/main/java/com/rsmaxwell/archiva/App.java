@@ -1,24 +1,62 @@
 package com.rsmaxwell.archiva;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
+import java.util.Arrays;
 
 public class App {
 
-	private static final String USER = "richard";
-	private static final String PASSWORD = "59N4257T5h4X2dz";
+	private static final String nl = System.getProperty("line.separator");
 
-	public static void main(String[] args) throws IOException, InterruptedException, URISyntaxException {
-		System.out.println("HelloWorld");
+	public static void main(String[] args) throws Exception {
+		System.out.println("ArchivaCleanup");
 
-		ArchivaClient client = new ArchivaClient(USER, PASSWORD);
+		Configuration config = Configuration.readConfiguration();
 
-		String groupId = "com.rsmaxwell.players";
-		String artifactId = "players-api-amd64-linux";
-		String packaging = "zip";
+		// System.out.println(config);
 
-		ArtifactVersions artifactVersions = client.GetArtifactVersions(groupId, artifactId, packaging);
+		ArchivaClient client = new ArchivaClient(config.getScheme(), config.getHost(), config.getPort(),
+				config.getBase(), config.getUser(), config.getPassword());
 
-		System.out.println(artifactVersions);
+		// client.getPingServicePing();
+		// client.getPingServicePingWithAuthz();
+
+		for (Item item : config.getItems()) {
+
+			// System.out.println("---[ item ]------------------");
+
+			for (String repositoryId : item.getRepositoryIds()) {
+
+				System.out.println("repositoryId: " + repositoryId);
+
+				BrowseServiceVersionsList browseServiceVersionList = client.getBrowseServiceVersionsList(repositoryId,
+						item.getGroupId(), item.getArtifactId());
+
+				browseServiceVersionList.init();
+
+				Arrays.sort(browseServiceVersionList.getComparableVersions(), new SortByComparableVersionReverse());
+
+				// System.out.print(browseServiceVersionList.toString());
+
+				int count = 0;
+				for (ComparableVersion comparableVersion : browseServiceVersionList.getComparableVersions()) {
+					count++;
+
+					boolean keep = true;
+					try {
+						int maximum_number = Integer.parseInt(item.keep.maximum_number);
+						if (count > maximum_number) {
+							keep = false;
+						}
+					} catch (NumberFormatException e) {
+					}
+
+					if (!keep) {
+						System.out.println("    Deleting: " + item.getGroupId() + ":" + comparableVersion + ":"
+								+ item.getArtifactId() + "    version:" + comparableVersion.toString());
+						client.deleteRepositoriesServiceProjectVersion(repositoryId, item.getGroupId(),
+								item.getArtifactId(), comparableVersion.toString());
+					}
+				}
+			}
+		}
 	}
 }
