@@ -3,7 +3,7 @@
   
   <groupId>com.rsmaxwell.archiva-cleanup</groupId>
   <artifactId>archiva-cleanup</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.2</version>
    
    <build>
     <plugins>

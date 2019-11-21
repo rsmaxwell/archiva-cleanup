@@ -1,13 +1,18 @@
 package com.rsmaxwell.archiva;
 
+import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.Date;
 
 public class App {
 
 	private static final String nl = System.getProperty("line.separator");
 
 	public static void main(String[] args) throws Exception {
-		System.out.println("ArchivaCleanup");
+
+		Date date = new Date();
+		String timestamp = new Timestamp(date.getTime()).toString();
+		System.out.println(timestamp + "    ---[ ArchivaCleanup ]---------------------------");
 
 		Configuration config = Configuration.readConfiguration();
 
