@@ -18,22 +18,22 @@ public class App {
 
 		// System.out.println(config);
 
-		ArchivaClient client = new ArchivaClient(config.getScheme(), config.getHost(), config.getPort(),
-				config.getBase(), config.getUser(), config.getPassword());
+		ArchivaClient client = new ArchivaClient(config.getScheme(), config.getHost(), config.getPort(), config.getBase(), config.getUser(),
+				config.getPassword());
 
 		// client.getPingServicePing();
 		// client.getPingServicePingWithAuthz();
 
 		for (Item item : config.getItems()) {
 
-			// System.out.println("---[ item ]------------------");
+			System.out.println(item.title());
 
 			for (String repositoryId : item.getRepositoryIds()) {
 
-				System.out.println("repositoryId: " + repositoryId);
+				System.out.println("    " + repositoryId);
 
-				BrowseServiceVersionsList browseServiceVersionList = client.getBrowseServiceVersionsList(repositoryId,
-						item.getGroupId(), item.getArtifactId());
+				BrowseServiceVersionsList browseServiceVersionList = client.getBrowseServiceVersionsList(repositoryId, item.getGroupId(),
+						item.getArtifactId());
 
 				browseServiceVersionList.init();
 
@@ -55,10 +55,10 @@ public class App {
 					}
 
 					if (!keep) {
-						System.out.println("    Deleting: " + item.getGroupId() + ":" + comparableVersion + ":"
-								+ item.getArtifactId() + "    version:" + comparableVersion.toString());
-						client.deleteRepositoriesServiceProjectVersion(repositoryId, item.getGroupId(),
-								item.getArtifactId(), comparableVersion.toString());
+						System.out.println("    Deleting: " + item.getGroupId() + ":" + comparableVersion + ":" + item.getArtifactId()
+								+ "    version:" + comparableVersion.toString());
+						client.deleteRepositoriesServiceProjectVersion(repositoryId, item.getGroupId(), item.getArtifactId(),
+								comparableVersion.toString());
 					}
 				}
 			}

@@ -2,7 +2,7 @@ package com.rsmaxwell.archiva;
 
 public class Item {
 
-	private static final String nl = System.getProperty("line.separator");
+	private static final String LS = System.getProperty("line.separator");
 
 	public String groupId;
 	public String artifactId;
@@ -34,9 +34,9 @@ public class Item {
 	public String toString() {
 
 		StringBuilder sb = new StringBuilder();
-		sb.append("    groupId: " + groupId + nl);
-		sb.append("    artifactId:" + artifactId + nl);
-		sb.append("    packaging:" + packaging + nl);
+		sb.append("    groupId: " + groupId + LS);
+		sb.append("    artifactId:" + artifactId + LS);
+		sb.append("    packaging:" + packaging + LS);
 
 		String seperator = "";
 		sb.append("    repositoryIds: [ ");
@@ -44,10 +44,22 @@ public class Item {
 			sb.append(seperator + repositoryId);
 			seperator = ", ";
 		}
-		sb.append(" ]" + nl);
+		sb.append(" ]" + LS);
 
-		sb.append("    keep:" + nl);
+		sb.append("    keep:" + LS);
 		sb.append(keep);
+
+		return sb.toString();
+	}
+
+	public String title() {
+
+		StringBuilder sb = new StringBuilder();
+		sb.append("{ ");
+		sb.append("\"groupId\": \"" + groupId + "\", ");
+		sb.append("\"artifactId\": \"" + artifactId + "\", ");
+		sb.append("\"packaging\": \"" + packaging + "\", ");
+		sb.append("}");
 
 		return sb.toString();
 	}
