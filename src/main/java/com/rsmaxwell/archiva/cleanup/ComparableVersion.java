@@ -64,7 +64,7 @@ import java.util.Properties;
  *      "https://cwiki.apache.org/confluence/display/MAVENOLD/Versioning">"Versioning"
  *      on Maven Wiki</a>
  * @author <a href="mailto:kenney@apache.org">Kenney Westerhof</a>
- * @author <a href="mailto:hboutemy@apache.org">Hervé Boutemy</a>
+ * @author <a href="mailto:hboutemy@apache.org">Herve Boutemy</a>
  */
 public class ComparableVersion implements Comparable<ComparableVersion> {
 	private static final int MAX_INTITEM_LENGTH = 9;
@@ -317,8 +317,7 @@ public class ComparableVersion implements Comparable<ComparableVersion> {
 	 * Represents a string in the version item list, usually a qualifier.
 	 */
 	private static class StringItem implements Item {
-		private static final List<String> QUALIFIERS = Arrays.asList("alpha", "beta", "milestone", "rc", "snapshot", "",
-				"sp");
+		private static final List<String> QUALIFIERS = Arrays.asList("alpha", "beta", "milestone", "rc", "snapshot", "", "sp");
 
 		private static final Properties ALIASES = new Properties();
 		static {
@@ -685,8 +684,7 @@ public class ComparableVersion implements Comparable<ComparableVersion> {
 
 			if (prev != null) {
 				int compare = prev.compareTo(c);
-				System.out.println("   " + prev.toString() + ' ' + ((compare == 0) ? "==" : ((compare < 0) ? "<" : ">"))
-						+ ' ' + version);
+				System.out.println("   " + prev.toString() + ' ' + ((compare == 0) ? "==" : ((compare < 0) ? "<" : ">")) + ' ' + version);
 			}
 
 			System.out.println(String.valueOf(i++) + ". " + version + " == " + c.getCanonical());
