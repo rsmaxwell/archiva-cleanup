@@ -1,14 +1,12 @@
-package com.rsmaxwell.archiva;
+package com.rsmaxwell.archiva.cleanup;
 
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Date;
 
-public class App {
+public class Cleanup {
 
-	private static final String nl = System.getProperty("line.separator");
-
-	public static void main(String[] args) throws Exception {
+	public void perform() throws Exception {
 
 		Date date = new Date();
 		String timestamp = new Timestamp(date.getTime()).toString();
@@ -30,7 +28,7 @@ public class App {
 
 			for (String repositoryId : item.getRepositoryIds()) {
 
-				System.out.println("    " + repositoryId);
+				System.out.printf("    %-20s", repositoryId);
 
 				BrowseServiceVersionsList browseServiceVersionList = client.getBrowseServiceVersionsList(repositoryId, item.getGroupId(),
 						item.getArtifactId());
@@ -39,7 +37,7 @@ public class App {
 
 				Arrays.sort(browseServiceVersionList.getComparableVersions(), new SortByComparableVersionReverse());
 
-				// System.out.print(browseServiceVersionList.toString());
+				System.out.printf("%5d\n", browseServiceVersionList.getComparableVersions().length);
 
 				int count = 0;
 				for (ComparableVersion comparableVersion : browseServiceVersionList.getComparableVersions()) {

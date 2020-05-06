@@ -1,4 +1,4 @@
-package com.rsmaxwell.archiva;
+package com.rsmaxwell.archiva.cleanup;
 
 import java.net.URI;
 

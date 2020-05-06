@@ -1,4 +1,4 @@
-package com.rsmaxwell.archiva;
+package com.rsmaxwell.archiva.cleanup;
 
 public class Item {
 
@@ -53,14 +53,6 @@ public class Item {
 	}
 
 	public String title() {
-
-		StringBuilder sb = new StringBuilder();
-		sb.append("{ ");
-		sb.append("\"groupId\": \"" + groupId + "\", ");
-		sb.append("\"artifactId\": \"" + artifactId + "\", ");
-		sb.append("\"packaging\": \"" + packaging + "\", ");
-		sb.append("}");
-
-		return sb.toString();
+		return groupId + " : " + artifactId;
 	}
 }

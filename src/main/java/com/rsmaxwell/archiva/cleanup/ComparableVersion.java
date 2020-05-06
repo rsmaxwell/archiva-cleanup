@@ -1,4 +1,4 @@
-package com.rsmaxwell.archiva;
+package com.rsmaxwell.archiva.cleanup;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
