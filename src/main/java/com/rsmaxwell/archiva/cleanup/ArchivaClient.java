@@ -44,8 +44,7 @@ public class ArchivaClient {
 
 		HttpHost targetHost = new HttpHost(host, port, scheme);
 		CredentialsProvider credsProvider = new BasicCredentialsProvider();
-		credsProvider.setCredentials(new AuthScope(targetHost.getHostName(), targetHost.getPort()),
-				new UsernamePasswordCredentials(user, password));
+		credsProvider.setCredentials(new AuthScope(targetHost.getHostName(), targetHost.getPort()), new UsernamePasswordCredentials(user, password));
 
 		// Create AuthCache instance
 		AuthCache authCache = new BasicAuthCache();
@@ -111,12 +110,10 @@ public class ArchivaClient {
 		return responseBody;
 	}
 
-	public BrowseServiceVersionsList getBrowseServiceVersionsList(String repositoryId, String groupId,
-			String artifactId) throws Exception {
+	public BrowseServiceVersionsList getBrowseServiceVersionsList(String repositoryId, String groupId, String artifactId) throws Exception {
 
 		String path = base + "/browseService/versionsList" + "/" + groupId + "/" + artifactId;
-		URI uri = new URIBuilder().setScheme(scheme).setHost(host).setPort(port).setPath(path)
-				.setParameter(REPOSITORYID, repositoryId).build();
+		URI uri = new URIBuilder().setScheme(scheme).setHost(host).setPort(port).setPath(path).setParameter(REPOSITORYID, repositoryId).build();
 
 		HttpGet httpget = new HttpGet(uri);
 		// System.out.println("Executing request " + httpget.getRequestLine());
@@ -128,7 +125,7 @@ public class ArchivaClient {
 				HttpEntity entity = response.getEntity();
 				return entity != null ? EntityUtils.toString(entity) : null;
 			} else {
-				throw new ClientProtocolException("Unexpected response status: " + status);
+				throw new ClientProtocolException("Unexpected response status: " + status + ", uri: " + uri.toString());
 			}
 		};
 
@@ -140,11 +137,9 @@ public class ArchivaClient {
 		return gson.fromJson(responseBody, BrowseServiceVersionsList.class);
 	}
 
-	public String deleteRepositoriesServiceProjectVersion(String repositoryId, String groupId, String artifactId,
-			String version) throws Exception {
+	public String deleteRepositoriesServiceProjectVersion(String repositoryId, String groupId, String artifactId, String version) throws Exception {
 
-		String path = base + "/repositoriesService/projectVersion" + "/" + repositoryId + "/" + groupId + "/"
-				+ artifactId + "/" + version;
+		String path = base + "/repositoriesService/projectVersion" + "/" + repositoryId + "/" + groupId + "/" + artifactId + "/" + version;
 
 		URI uri = new URIBuilder().setScheme(scheme).setHost(host).setPort(port).setPath(path).build();
 
