@@ -1,4 +1,6 @@
-package com.rsmaxwell.archiva.cleanup;
+package com.rsmaxwell.archiva.client;
+
+import com.rsmaxwell.archiva.cleanup.ComparableVersion;
 
 public class BrowseServiceVersionsList {
 
