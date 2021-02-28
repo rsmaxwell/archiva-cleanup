@@ -14,6 +14,8 @@ public class Cleanup {
 
 	public void perform() throws Exception {
 
+		List<String> log = new ArrayList<String>();
+		int deleteCount = 0;
 		Date date = new Date();
 		String timestamp = new Timestamp(date.getTime()).toString();
 		System.out.println(timestamp + "    ---[ ArchivaCleanup ]---------------------------");
@@ -25,12 +27,12 @@ public class Cleanup {
 		LoginData loginData = client.login();
 
 		for (Item item : config.getItems()) {
-			System.out.println(item.title());
+			log.add(String.format(item.title()));
 			int maximum_number = Integer.parseInt(item.keep.maximum_number);
 
 			for (String repositoryId : item.getRepositoryIds()) {
 
-				System.out.printf("    %-20s\n", repositoryId);
+				log.add(String.format("    %-20s", repositoryId));
 
 				VersionData versionData = client.getBrowseServiceVersionsList(loginData, repositoryId, item.getGroupId(), item.getArtifactId());
 
@@ -46,12 +48,20 @@ public class Cleanup {
 					count++;
 
 					if (count > maximum_number) {
-						System.out.printf("        deleting   %s\n", version.toString());
+						deleteCount++;
+						log.add(String.format("        deleting   %s", version.toString()));
 						client.deleteRepositoriesServiceProjectVersion(loginData, repositoryId, item.getGroupId(), item.getArtifactId(), version.toString());
-					} else {
-						System.out.printf("        keeping    %s\n", version.toString());
 					}
+//					else {
+//						log.add(String.format("        keeping    %s", version.toString()));
+//					}
 				}
+			}
+		}
+
+		if (deleteCount > 0) {
+			for (String line : log) {
+				System.out.println(line);
 			}
 		}
 	}
