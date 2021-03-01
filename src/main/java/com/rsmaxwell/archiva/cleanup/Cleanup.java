@@ -18,7 +18,8 @@ public class Cleanup {
 		int deleteCount = 0;
 		Date date = new Date();
 		String timestamp = new Timestamp(date.getTime()).toString();
-		System.out.printf(timestamp + "    ---[ ArchivaCleanup: %s ]---------------------------\n", Version.version());
+
+		log.add(String.format(timestamp + "    ---[ ArchivaCleanup: %s ]---------------------------\n", Version.version()));
 
 		Configuration config = Configuration.readConfiguration();
 
